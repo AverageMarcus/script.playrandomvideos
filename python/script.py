@@ -24,6 +24,11 @@ def get_arginfo():
         pathinfo[arg[0].strip().lower()] = arg[1].strip() if len(arg) > 1 else True
 
     pathinfo['full path'] = sys.argv[1]
+
+    # HACK: Allow remapping remote button to trigger script from highlighted TV show
+    if pathinfo['full path'] == "TVSHOW":
+        pathinfo['full path'] = "videodb://tvshows/titles/" + xbmc.getInfoLabel('ListItem.DBID')
+    
     pathinfo.update(get_pathinfo(pathinfo['full path']))
     return pathinfo
 
